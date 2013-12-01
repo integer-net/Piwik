@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * integer_net Magento Module
+ *
+ * @category IntegerNet
+ * @package IntegerNet_Piwik
+ * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @author Viktor Franz <vf@integer-net.de>
+ */
+
+/**
+ * Enter description here ...
+ */
+-->
+<config>
+    <modules>
+        <IntegerNet_Piwik>
+            <active>true</active>
+            <codePool>community</codePool>
+        </IntegerNet_Piwik>
+    </modules>
+</config>

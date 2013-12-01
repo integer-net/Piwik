@@ -1,0 +1,27 @@
+{
+    "name": "integer-net/piwik",
+    "description": "Magento Piwik integration module",
+    "license": "OSL-3.0",
+    "homepage": "https://github.com/integer-net/Piwik",
+    "keywords": [ "piwik", "magento"],
+    "type": "magento-module",
+    "authors": [
+        {
+            "name": "Viktor Franz",
+            "email": "vf@integer-net.de"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "extra": {
+        "map": [
+            ["src/app/code/community/IntegerNet/Piwik", "app/code/community/IntegerNet/Piwik"],
+            ["src/app/design/frontend/base/default/layout/integernet_piwik.xml", "app/design/frontend/base/default/layout/integernet_piwik.xml"],
+            ["src/app/design/frontend/base/default/template/integernet_piwik/track.phtml", "app/design/frontend/base/default/template/integernet_piwik/track.phtml"],
+            ["src/app/etc/modules/IntegerNet_Piwik.xml", "app/etc/modules/IntegerNet_Piwik.xml"],
+            ["src/app/locale/en_US/IntegerNet_Piwik.csv", "app/locale/en_US/IntegerNet_Piwik.csv"]
+        ]
+    }
+}
+

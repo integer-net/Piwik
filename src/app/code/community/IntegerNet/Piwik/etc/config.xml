@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * integer_net Magento Module
+ *
+ * @category IntegerNet
+ * @package IntegerNet_Piwik
+ * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @author Viktor Franz <vf@integer-net.de>
+ */
+
+/**
+ * Enter description here ...
+ */
+-->
+<config>
+    <modules>
+        <IntegerNet_Piwik>
+            <version>1.0.0</version>
+        </IntegerNet_Piwik>
+    </modules>
+    <global>
+        <helpers>
+            <integernet_piwik>
+                <class>IntegerNet_Piwik_Helper</class>
+            </integernet_piwik>
+        </helpers>
+        <blocks>
+            <integernet_piwik>
+                <class>IntegerNet_Piwik_Block</class>
+            </integernet_piwik>
+        </blocks>
+        <models>
+            <integernet_piwik>
+                <class>IntegerNet_Piwik_Model</class>
+            </integernet_piwik>
+        </models>
+    </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <IntegerNet_Piwik>
+                    <files>
+                        <default>IntegerNet_Piwik.csv</default>
+                    </files>
+                </IntegerNet_Piwik>
+            </modules>
+        </translate>
+    </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <integernet_piwik>
+                    <file>integernet_piwik.xml</file>
+                </integernet_piwik>
+            </updates>
+        </layout>
+        <events>
+            <checkout_multishipping_controller_success_action>
+                <observers>
+                    <integernet_piwik>
+                        <class>integernet_piwik/observer</class>
+                        <method>checkoutMultishippingControllerSuccessAction</method>
+                    </integernet_piwik>
+                </observers>
+            </checkout_multishipping_controller_success_action>
+            <sales_quote_save_after>
+                <observers>
+                    <integernet_piwik>
+                        <class>integernet_piwik/observer</class>
+                        <method>salesQuoteSaveAfter</method>
+                    </integernet_piwik>
+                </observers>
+            </sales_quote_save_after>
+        </events>
+    </frontend>
+    <default>
+        <integernet_piwik>
+            <settigs>
+                <is_active>0</is_active>
+                <side_id></side_id>
+                <host></host>
+                <host_secure></host_secure>
+                <head_js>0</head_js>
+            </settigs>
+        </integernet_piwik>
+    </default>
+</config>

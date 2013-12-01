@@ -1,0 +1,68 @@
+<?php
+/**
+ * integer_net Magento Module
+ *
+ * @category IntegerNet
+ * @package IntegerNet_Piwik
+ * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @author Viktor Franz <vf@integer-net.de>
+ */
+
+/**
+ * Enter description here ...
+ */
+?>
+
+<?php /** @var $this IntegerNet_Piwik_Block_Track */ ?>
+
+<?php if(!Mage::helper('integernet_piwik')->isHeadJs()): ?>
+    <script type="text/javascript" defer="" async="" src="<?php echo $this->getPiwikJsSrc() ?>"></script>
+<?php endif; ?>
+
+<script type="text/javascript">
+    var _paq = _paq || [];
+
+    _paq.push(["setTrackerUrl", "<?php echo $this->getPiwikPhpSrc() ?>"]);
+    _paq.push(["setSiteId", "<?php echo $this->getSideId() ?>"]);
+    _paq.push(["enableLinkTracking"]);
+    _paq.push(["setDocumentTitle", document.title]);
+
+    <?php if($_arguments = $this->getCatalogViewArguments()) : ?>
+        _paq.push(["setEcommerceView", <?php echo $_arguments ?>]);
+    <?php endif; ?>
+
+    <?php if($_arguments = $this->getProductViewArguments()) : ?>
+        _paq.push(["setEcommerceView", <?php echo $_arguments ?>]);
+    <?php endif; ?>
+
+    <?php if($_argumentsList = $this->getCartItemArguments()) : ?>
+        <?php foreach($_argumentsList as $_arguments) : ?>
+            _paq.push(["addEcommerceItem", <?php echo $_arguments ?>]);
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <?php $_arguments = $this->getCartArguments() ?>
+    <?php if($_arguments !== null) : ?>
+        _paq.push(["trackEcommerceCartUpdate", <?php echo $_arguments ?>]);
+    <?php endif; ?>
+
+    <?php if($_argumentsList = $this->getOrderItemArguments()) : ?>
+        <?php foreach($_argumentsList as $_arguments) : ?>
+            _paq.push(["addEcommerceItem", <?php echo $_arguments ?>]);
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <?php if($_arguments = $this->getOrderArguments()) : ?>
+        _paq.push(["trackEcommerceOrder", <?php echo $_arguments ?>]);
+    <?php endif; ?>
+
+    _paq.push(["trackPageView"]);
+</script>
+
+
+
+
+
+
+
+
