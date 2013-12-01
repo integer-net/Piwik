@@ -26,7 +26,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
      *
      */
     const SESSION_KEY_MULTISHIPPING_ORDER_IDS = '_integernet_piwik_multishipping_order_ids';
-    const SESSION_KEY_QUOTE_ITEMS = '_integernet_piwik_quote_items';
+    const SESSION_KEY_QUOTE_ITEMS = '_integernet_piwik_cart_items';
 
     /**
      * @return bool

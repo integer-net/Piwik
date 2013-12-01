@@ -11,7 +11,7 @@
 /**
  * Enter description here ...
  */
-class IntegerNet_Piwik_Model_System_Config_Backend_JsHead extends Mage_Core_Model_Config_Data
+class IntegerNet_Piwik_Model_System_Config_Backend_HeadJs extends Mage_Core_Model_Config_Data
 {
     /**
      *
