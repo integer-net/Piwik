@@ -5,6 +5,7 @@
  * @category IntegerNet
  * @package IntegerNet_Piwik
  * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @license http://opensource.org/licenses/osl-3.0.php Open Software Licence 3.0 (OSL-3.0)
  * @author Viktor Franz <vf@integer-net.de>
  */
 
