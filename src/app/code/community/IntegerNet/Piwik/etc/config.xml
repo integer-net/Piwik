@@ -83,6 +83,7 @@
                 <host></host>
                 <host_secure></host_secure>
                 <head_js>0</head_js>
+                <track_onepage_action>0</track_onepage_action>
             </settigs>
         </integernet_piwik>
     </default>

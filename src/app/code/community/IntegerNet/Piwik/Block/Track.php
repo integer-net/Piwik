@@ -122,6 +122,20 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
     }
 
     /**
+     * @return bool
+     */
+    public function getTrackOnepageSteps()
+    {
+        $handles = $this->getLayout()->getUpdate()->getHandles();
+
+        if (in_array('checkout_onepage_index', $handles) && Mage::helper('integernet_piwik')->getTrackOnepageSteps()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @return null|array
      */
     public function getCartItemArguments()

@@ -22,6 +22,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_INTEGERNET_PIWIK_SETTIGS_HOST = 'integernet_piwik/settigs/host';
     const XML_PATH_INTEGERNET_PIWIK_SETTIGS_HOST_SECURE = 'integernet_piwik/settigs/host_secure';
     const XML_PATH_INTEGERNET_PIWIK_SETTIGS_HEAD_JS = 'integernet_piwik/settigs/head_js';
+    const XML_PATH_INTEGERNET_PIWIK_SETTIGS_TRACK_ONEPAGE_ACTION = 'integernet_piwik/settigs/track_onepage_action';
 
     /**
      *
@@ -69,6 +70,14 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
     public function isHeadJs()
     {
         return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_HEAD_JS);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTrackOnepageSteps()
+    {
+        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_TRACK_ONEPAGE_ACTION);
     }
 
     /**

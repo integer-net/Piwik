@@ -61,6 +61,20 @@
     <?php endif; ?>
 
     _paq.push(["trackPageView"]);
+
+    <?php if($this->getTrackOnepageSteps()): ?>
+        Ajax.Responders.register({
+            onCreate: function(response) {
+                if(response.url) {
+                    var saveMethod = response.url.match(/(save\w*)/);
+                    if(saveMethod && saveMethod.length) {
+                        _paq.push(["trackPageView", saveMethod[0]]);
+                    }
+                }
+            }
+        });
+    <?php endif; ?>
+
 </script>
 
 <noscript>
