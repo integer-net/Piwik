@@ -26,7 +26,10 @@
     _paq.push(["setTrackerUrl", "<?php echo $this->getPiwikPhpSrc() ?>"]);
     _paq.push(["setSiteId", "<?php echo $this->getSideId() ?>"]);
     _paq.push(["enableLinkTracking"]);
-    _paq.push(["setDocumentTitle", document.title]);
+
+    <?php if($_search = $this->searchArguments()) : ?>
+        _paq.push(["trackSiteSearch", <?php echo $_search ?>]);
+    <?php endif; ?>
 
     <?php if($_arguments = $this->getCatalogViewArguments()) : ?>
         _paq.push(["setEcommerceView", <?php echo $_arguments ?>]);
@@ -59,6 +62,10 @@
 
     _paq.push(["trackPageView"]);
 </script>
+
+<noscript>
+    <img src="<?php echo sprintf('%s?idsite=%s&rec=1', $this->getPiwikPhpSrc(), $this->getSideId())?>" style="border:0" alt="" />
+</noscript>
 
 
 

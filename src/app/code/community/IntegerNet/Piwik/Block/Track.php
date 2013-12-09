@@ -97,24 +97,58 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
     }
 
     /**
-     * @return array|null
+     * @return null|string
+     */
+    public function searchArguments()
+    {
+        $arguments = array();
+        $handles = $this->getLayout()->getUpdate()->getHandles();
+
+        if (in_array('catalogsearch_result_index', $handles)) {
+
+            $arguments[] = sprintf('"%s"', addslashes(trim(Mage::helper('catalogsearch')->getQuery()->getQueryText())));
+            $arguments[] = 'null';
+            $arguments[] = Mage::helper('catalogsearch')->getQuery()->getNumResults();
+
+        } elseif (in_array('catalogsearch_advanced_result', $handles)) {
+
+            $count = Mage::getSingleton('catalogsearch/advanced')->getProductCollection()->count();
+            $arguments[] = $count ? '"advanced-search"' : '"advanced-search-no-results"';
+            $arguments[] = 'null';
+            $arguments[] = $count;
+        }
+
+        return count($arguments) ? implode(', ', $arguments) : null;
+    }
+
+    /**
+     * @return null|array
      */
     public function getCartItemArguments()
     {
-        if ($items = Mage::helper('integernet_piwik')->getCartItems()) {
+        if (Mage::helper('integernet_piwik')->getHasQuoteUpdate() && $quote = Mage::helper('checkout')->getQuote()) {
+
+            $groupArguments = array();
+
+            foreach ($quote->getAllVisibleItems() as $item) {
+
+                if (array_key_exists($item->getSku(), $groupArguments)) {
+                    $groupArguments[$item->getSku()][3] += $item->getBaseRowTotalInclTax();
+                    $groupArguments[$item->getSku()][4] += $item->getQty();
+                } else {
+                    $groupArguments[$item->getSku()][0] = sprintf('"%s"', addslashes($item->getSku()));
+                    $groupArguments[$item->getSku()][1] = sprintf('"%s"', addslashes($item->getName()));
+                    $groupArguments[$item->getSku()][2] = Mage::helper('integernet_piwik')->getProductCategoryList($item->getProductId());
+                    $groupArguments[$item->getSku()][3] = $item->getBaseRowTotalInclTax();
+                    $groupArguments[$item->getSku()][4] = $item->getQty();
+                }
+            }
+
             $argumentsList = array();
 
-            foreach ($items as $item) {
-
-                $arguments = array();
-                $arguments[] = sprintf('"%s"', addslashes($item->getSku()));
-                $arguments[] = sprintf('"%s"', addslashes($item->getName()));
-                $arguments[] = $item->getCategoryList();
-                $arguments[] = $item->getBasePriceInclTax();
-                $arguments[] = $item->getQty();
-
+            foreach ($groupArguments as $arguments) {
+                $arguments[3] = $arguments[3] / $arguments[4];
                 $argumentsList[] = implode(', ', $arguments);
-
             }
 
             return $argumentsList;
@@ -128,9 +162,8 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
      */
     public function getCartArguments()
     {
-        $cartAmount = Mage::helper('integernet_piwik')->getCartAmount();
-        if ($cartAmount !== null) {
-            return $cartAmount;
+        if (Mage::helper('integernet_piwik')->getHasQuoteUpdate() && $quote = Mage::helper('checkout')->getQuote()) {
+            return $quote->getBaseGrandTotal();
         }
 
         return null;
@@ -183,7 +216,7 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
             $baseDiscountAmount = $orders->getColumnValues('base_discount_amount');
 
             $arguments = array();
-            $arguments[] = sprintf('"%s"', implode(' / ', $incrementId));
+            $arguments[] = sprintf('"%s"', implode(';', $incrementId));
             $arguments[] = array_sum($baseGrandTotal);
             $arguments[] = array_sum($baseSubtotalInclTax);
             $arguments[] = array_sum($baseTaxAmount);
@@ -203,29 +236,32 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
     {
         if ($orders = $this->_getOrders()) {
 
-            $argumentsList = array();
+            $groupArguments = array();
 
-            $single = $orders->count() == 1 ? true : false;;
-
+            /** @var $order Mage_Sales_Model_Order */
             foreach ($orders as $order) {
 
+                /** @var $item Mage_Sales_Model_Order_Item */
                 foreach ($order->getAllVisibleItems() as $item) {
 
-                    $arguments = array();
-
-                    if($single) {
-                        $arguments[] = sprintf('"%s"', addslashes($item->getSku()));
+                    if (array_key_exists($item->getSku(), $groupArguments)) {
+                        $groupArguments[$item->getSku()][3] += $item->getBaseRowTotalInclTax();
+                        $groupArguments[$item->getSku()][4] += $item->getQtyOrdered();
                     } else {
-                        $arguments[] = sprintf('"%s [%s]"', addslashes($item->getSku()), $order->getIncrementId());
+                        $groupArguments[$item->getSku()][0] = sprintf('"%s"', addslashes($item->getSku()));
+                        $groupArguments[$item->getSku()][1] = sprintf('"%s"', addslashes($item->getName()));
+                        $groupArguments[$item->getSku()][2] = Mage::helper('integernet_piwik')->getProductCategoryList($item->getProductId());
+                        $groupArguments[$item->getSku()][3] = $item->getBaseRowTotalInclTax();
+                        $groupArguments[$item->getSku()][4] = $item->getQtyOrdered();
                     }
-
-                    $arguments[] = sprintf('"%s"', addslashes($item->getName()));
-                    $arguments[] = Mage::helper('integernet_piwik')->getProductCategoryList($item->getProductId());
-                    $arguments[] = $item->getBasePriceInclTax();
-                    $arguments[] = $item->getQtyOrdered();
-
-                    $argumentsList[] = implode(', ', $arguments);
                 }
+            }
+
+            $argumentsList = array();
+
+            foreach ($groupArguments as $arguments) {
+                $arguments[3] = $arguments[3] / $arguments[4];
+                $argumentsList[] = implode(', ', $arguments);
             }
 
             return $argumentsList;
@@ -246,5 +282,17 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
         }
 
         return null;
+    }
+
+    /**
+     * Processing block html after rendering
+     *
+     * @param   string $html
+     * @return  string
+     */
+    protected function _afterToHtml($html)
+    {
+        Mage::helper('integernet_piwik')->getHasQuoteUpdate(true);
+        return parent::_afterToHtml($html);
     }
 }

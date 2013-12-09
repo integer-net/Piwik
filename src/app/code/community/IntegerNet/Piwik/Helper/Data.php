@@ -27,7 +27,6 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
      *
      */
     const SESSION_KEY_MULTISHIPPING_ORDER_IDS = '_integernet_piwik_multishipping_order_ids';
-    const SESSION_KEY_QUOTE_ITEMS = '_integernet_piwik_cart_items';
 
     /**
      * @return bool
@@ -95,84 +94,25 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @param Mage_Sales_Model_Quote $quote
      * @return $this
      */
-    public function setCartItems(Mage_Sales_Model_Quote $quote)
+    public function setHasQuoteUpdate()
     {
-        $itemsInfo = Mage::getSingleton('core/session')->getData(self::SESSION_KEY_QUOTE_ITEMS);
-        $itemsInfo = ($itemsInfo instanceof Varien_Object) ? $itemsInfo : (new Varien_Object());
-
-        $items = new Varien_Data_Collection();
-        $cartAmount = 0;
-
-        foreach ($quote->getAllVisibleItems() as $item) {
-
-            $simpleItem = new Varien_Object(array(
-                'sku' => $item->getSku(),
-                'name' => $item->getName(),
-                'category_list' => $this->getProductCategoryList($item->getProductId()),
-                'base_price_incl_tax' => $item->getBasePriceInclTax(),
-                'qty' => $item->getQty(),
-            ));
-
-            $items->addItem($simpleItem);
-            $cartAmount += $item->getBaseRowTotalInclTax();
-        }
-
-        $hash = md5(serialize($items));
-
-        if ($itemsInfo->getHash() != $hash) {
-            $itemsInfo->setHash($hash);
-            $itemsInfo->setItems($items);
-            $itemsInfo->setCartAmount($cartAmount);
-
-            Mage::getSingleton('core/session')->setData(self::SESSION_KEY_QUOTE_ITEMS, $itemsInfo);
-        }
-
+        Mage::getSingleton('core/session')->setIntegernetPiwikQuote(true);
         return $this;
     }
 
     /**
-     * @return null||Varien_Data_Collection
+     * @param $unset
+     * @return null|bool
      */
-    public function getCartItems()
+    public function getHasQuoteUpdate($unset = false)
     {
-        $itemsInfo = Mage::getSingleton('core/session')->getData(self::SESSION_KEY_QUOTE_ITEMS);
-
-        if ($itemsInfo instanceof Varien_Object) {
-
-            $items = $itemsInfo->getItems();
-            $itemsInfo->unsetData('items');
-
-            Mage::getSingleton('core/session')->setData(self::SESSION_KEY_QUOTE_ITEMS, $itemsInfo);
-
-            return $items;
+        if($unset === true) {
+            return Mage::getSingleton('core/session')->getIntegernetPiwikQuote(true);
         }
 
-        return null;
-    }
-
-    /**
-     * @return null||float
-     */
-    public function getCartAmount()
-    {
-        $itemsInfo = Mage::getSingleton('core/session')->getData(self::SESSION_KEY_QUOTE_ITEMS);
-
-        if ($itemsInfo instanceof Varien_Object) {
-
-            $itemsInfo = Mage::getSingleton('core/session')->getData(self::SESSION_KEY_QUOTE_ITEMS);
-
-            $cartAmount = $itemsInfo->getCartAmount();
-            $itemsInfo->unsetData('cart_amount');
-
-            Mage::getSingleton('core/session')->setData(self::SESSION_KEY_QUOTE_ITEMS, $itemsInfo);
-
-            return $cartAmount;
-        }
-
-        return null;
+        return Mage::getSingleton('core/session')->getIntegernetPiwikQuote();
     }
 
     /**
@@ -185,7 +125,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
 
         /** @var $product Mage_Catalog_Model_Product */
         $product = Mage::getModel('catalog/product')->load($productId);
-        if($product->getId()) {
+        if ($product->getId()) {
             $categoryIds = $product->getCategoryIds();
             array_splice($categoryIds, 5);
 
@@ -194,8 +134,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
             $categories->addAttributeToSelect('name');
             $categories->load();
 
-
-            foreach($categories as $category) {
+            foreach ($categories as $category) {
                 $categoryList[] = sprintf('"%s"', addslashes($category->getName()));
             }
         }

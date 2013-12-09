@@ -29,9 +29,6 @@ class IntegerNet_Piwik_Model_Observer
      */
     public function salesQuoteSaveAfter(Varien_Event_Observer $observer)
     {
-        /** @var $quote Mage_Sales_Model_Quote */
-        $quote = $observer->getQuote();
-
-        Mage::helper('integernet_piwik')->setCartItems($quote);
+        Mage::helper('integernet_piwik')->setHasQuoteUpdate();
     }
 }
