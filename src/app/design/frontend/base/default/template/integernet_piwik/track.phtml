@@ -66,9 +66,9 @@
         Ajax.Responders.register({
             onCreate: function(response) {
                 if(response.url) {
-                    var saveMethod = response.url.match(/(save\w*)/);
-                    if(saveMethod && saveMethod.length) {
-                        _paq.push(["trackPageView", saveMethod[0]]);
+                    var saveAction = response.url.match(/(save\w*)/);
+                    if(saveAction && saveAction.length) {
+                        _paq.push(["trackPageView", saveAction[0]]);
                     }
                 }
             }
