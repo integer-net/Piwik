@@ -77,14 +77,14 @@
     </frontend>
     <default>
         <integernet_piwik>
-            <settigs>
+            <settings>
                 <is_active>0</is_active>
                 <side_id></side_id>
                 <host></host>
                 <host_secure></host_secure>
                 <head_js>0</head_js>
                 <track_onepage_action>0</track_onepage_action>
-            </settigs>
+            </settings>
         </integernet_piwik>
     </default>
 </config>

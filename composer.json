@@ -7,8 +7,16 @@
     "type": "magento-module",
     "authors": [
         {
+            "name": "integer_net GmbH",
+            "email": "info@integer-net.de",
+            "homepage": "http://www.integer-net.de/",
+            "role": "Company"
+        },
+        {
             "name": "Viktor Franz",
-            "email": "vf@integer-net.de"
+            "email": "vf@integer-net.de",
+            "homepage": "http://www.integer-net.de/",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -18,10 +26,45 @@
         "map": [
             ["src/app/code/community/IntegerNet/Piwik", "app/code/community/IntegerNet/Piwik"],
             ["src/app/design/frontend/base/default/layout/integernet_piwik.xml", "app/design/frontend/base/default/layout/integernet_piwik.xml"],
-            ["src/app/design/frontend/base/default/template/integernet_piwik/track.phtml", "app/design/frontend/base/default/template/integernet_piwik/track.phtml"],
+            ["src/app/design/frontend/base/default/template/integernet_piwik", "app/design/frontend/base/default/template/integernet_piwik"],
             ["src/app/etc/modules/IntegerNet_Piwik.xml", "app/etc/modules/IntegerNet_Piwik.xml"],
             ["src/app/locale/en_US/IntegerNet_Piwik.csv", "app/locale/en_US/IntegerNet_Piwik.csv"]
-        ]
+        ],
+        "magento_connect": {
+            "name": "IntegerNet_Piwik",
+            "license_uri": "http://opensource.org/licenses/osl-3.0.php",
+            "channel": "community",
+            "php_min": "5.2.0",
+            "php_max": "5.5.99",
+            "stability": "stable",
+            "content": [
+                {
+                    "type": "mage",
+                    "structure": "dir",
+                    "path": "app/code/community/IntegerNet/Piwik"
+                },
+                {
+                    "type": "mage",
+                    "structure": "file",
+                    "path": "app/design/frontend/base/default/layout/integernet_piwik.xml"
+                },
+                {
+                    "type": "mage",
+                    "structure": "dir",
+                    "path": "app/design/frontend/base/default/template/integernet_piwik"
+                },
+                {
+                    "type": "mage",
+                    "structure": "file",
+                    "path": "app/etc/modules/IntegerNet_Piwik.xml"
+                },
+                {
+                    "type": "mage",
+                    "structure": "file",
+                    "path": "app/locale/en_US/IntegerNet_Piwik.csv"
+                }
+            ]
+        }
     }
 }
 

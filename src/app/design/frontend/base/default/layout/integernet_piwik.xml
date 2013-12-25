@@ -17,7 +17,7 @@
 <layout version="0.1.0">
     <default>
         <reference name="head">
-            <action method="addJs" ifconfig="integernet_piwik/settigs/head_js"><script>integernet_piwik/piwik.js</script></action>
+            <action method="addJs" ifconfig="integernet_piwik/settings/head_js"><script>integernet_piwik/piwik.js</script></action>
         </reference>
         <reference name="before_body_end">
             <block type="integernet_piwik/track" name="integernet_piwik_track" as="integernet_piwik_track" after="-" />

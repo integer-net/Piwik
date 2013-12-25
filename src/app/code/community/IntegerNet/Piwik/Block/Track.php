@@ -106,7 +106,7 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
 
         if (in_array('catalogsearch_result_index', $handles)) {
 
-            $arguments[] = sprintf('"%s"', addslashes(trim(Mage::helper('catalogsearch')->getQuery()->getQueryText())));
+            $arguments[] = sprintf('"%s"', addslashes(strtolower(trim(Mage::helper('catalogsearch')->getQuery()->getQueryText()))));
             $arguments[] = 'null';
             $arguments[] = Mage::helper('catalogsearch')->getQuery()->getNumResults();
 

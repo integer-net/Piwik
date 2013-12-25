@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/index.php/customer/account/logout/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php/catalogsearch/result/?q=John+Doe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php/catalogsearch/result/?q=Red</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php/catalogsearch/advanced/result/?name=John+Doe&amp;description=&amp;sku=&amp;price[from]=&amp;price[to]=</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php//catalogsearch/advanced/result/?name=&amp;description=&amp;sku=&amp;price[from]=&amp;price[to]=&amp;color[]=26</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php/furniture.html</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php/ottoman.html</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[@id='qty']</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[contains(@onclick, 'productAddToCartForm.submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php/checkout/onepage/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[@id='login-email']</td>
+	<td>johndie@magento.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[@id='login-password']</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[contains(@onclick, 'onepageLogin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//input[contains(@id, 'use_for_shipping_no')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[contains(@onclick, 'billing.save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xpath=//li[@id='opc-shipping']/div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[contains(@onclick, 'shipping.save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xpath=//li[@id='opc-shipping_method']/div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[contains(@onclick, 'shippingMethod.save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xpath=//li[@id='opc-payment']/div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//input[@id='p_method_checkmo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[contains(@onclick, 'payment.save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xpath=//li[@id='opc-review']/div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[contains(@onclick, 'review.save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[contains(@href, '/sales/order/view/order_id/')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[contains(@href, '/sales/order/reorder/order_id/')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[contains(@href, '/checkout/multishipping/')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//table[@id='multiship-addresses-table']/tbody/tr/td[3]/select</td>
+	<td>index=0</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//div[@class='buttons-set']/button[contains(@onclick, 'can_continue_flag')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//div[@class='buttons-set']/button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//input[@id='p_method_checkmo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//div[@class='buttons-set']/button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[@id='review-button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php/chair.html</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[contains(@onclick, 'productAddToCartForm.submit')]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -25,7 +25,7 @@
             <show_in_website>1</show_in_website>
             <show_in_store>10</show_in_store>
             <groups>
-                <settigs translate="label">
+                <settings translate="label">
                     <label>Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>10</sort_order>
@@ -83,7 +83,7 @@
                             <show_in_store>1</show_in_store>
                         </track_onepage_action>
                     </fields>
-                </settigs>
+                </settings>
             </groups>
         </integernet_piwik>
     </sections>

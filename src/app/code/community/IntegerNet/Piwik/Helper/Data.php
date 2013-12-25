@@ -17,12 +17,12 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      *
      */
-    const XML_PATH_INTEGERNET_PIWIK_SETTIGS_IS_ACTIVE = 'integernet_piwik/settigs/is_active';
-    const XML_PATH_INTEGERNET_PIWIK_SETTIGS_SIDE_ID = 'integernet_piwik/settigs/side_id';
-    const XML_PATH_INTEGERNET_PIWIK_SETTIGS_HOST = 'integernet_piwik/settigs/host';
-    const XML_PATH_INTEGERNET_PIWIK_SETTIGS_HOST_SECURE = 'integernet_piwik/settigs/host_secure';
-    const XML_PATH_INTEGERNET_PIWIK_SETTIGS_HEAD_JS = 'integernet_piwik/settigs/head_js';
-    const XML_PATH_INTEGERNET_PIWIK_SETTIGS_TRACK_ONEPAGE_ACTION = 'integernet_piwik/settigs/track_onepage_action';
+    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_IS_ACTIVE = 'integernet_piwik/settings/is_active';
+    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_SIDE_ID = 'integernet_piwik/settings/side_id';
+    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST = 'integernet_piwik/settings/host';
+    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST_SECURE = 'integernet_piwik/settings/host_secure';
+    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_HEAD_JS = 'integernet_piwik/settings/head_js';
+    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_TRACK_ONEPAGE_ACTION = 'integernet_piwik/settings/track_onepage_action';
 
     /**
      *
@@ -34,7 +34,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function isActive()
     {
-        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_IS_ACTIVE);
+        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_IS_ACTIVE);
     }
 
     /**
@@ -42,7 +42,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getSideId()
     {
-        $sideId = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_SIDE_ID);
+        $sideId = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_SIDE_ID);
         $sideId = trim($sideId);
 
         return preg_match('/^\d*$/', $sideId) ? $sideId : null;
@@ -54,9 +54,9 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
     public function getHost()
     {
         if (Mage::app()->getRequest()->isSecure()) {
-            $host = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_HOST_SECURE);
+            $host = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST_SECURE);
         } else {
-            $host = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_HOST);
+            $host = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST);
         }
 
         $host = trim($host);
@@ -69,7 +69,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function isHeadJs()
     {
-        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_HEAD_JS);
+        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_HEAD_JS);
     }
 
     /**
@@ -77,7 +77,7 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getTrackOnepageSteps()
     {
-        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTIGS_TRACK_ONEPAGE_ACTION);
+        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_TRACK_ONEPAGE_ACTION);
     }
 
     /**
