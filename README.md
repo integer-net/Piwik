@@ -68,7 +68,7 @@ Developer
 ---------
 Viktor Franz
 
-WWW [http://www.integer-net.de/](http://www.integer-net.de/)
+WWW [http://www.integer-net.de/](http://www.integer-net.de/)  
 Twitter [@integer_net](https://twitter.com/integer_net)
 
 Licence
