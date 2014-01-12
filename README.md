@@ -43,7 +43,7 @@ Installation Instructions
 -------------------------
 1. Install the extension by copying all the files in `src` directory into your Magento document root.
 2. Clear the cache and start a new admin session (logout from the admin panel and then login again).
-3. Configure the extension under `System >> Configuration >> Piwik (integer_net)`
+3. Configure the extension under ***System >> Configuration >> Piwik (integer_net)***
 
 Uninstallation
 --------------
