@@ -5,13 +5,10 @@
  *
  * @category IntegerNet
  * @package IntegerNet_Piwik
- * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @copyright  Copyright (c) 2013-2014 integer_net GmbH (http://www.integer-net.de/)
  * @license http://opensource.org/licenses/osl-3.0.php Open Software Licence 3.0 (OSL-3.0)
+ * @author integer_net GmbH <info@integer-net.de>
  * @author Viktor Franz <vf@integer-net.de>
- */
-
-/**
- * Enter description here ...
  */
 -->
 <config>
@@ -79,11 +76,13 @@
         <integernet_piwik>
             <settings>
                 <is_active>0</is_active>
-                <side_id></side_id>
-                <host></host>
-                <host_secure></host_secure>
+                <side_id/>
+                <host/>
+                <host_secure/>
                 <head_js>0</head_js>
                 <track_onepage_action>0</track_onepage_action>
+                <advanced_search_result_key>advanced-search</advanced_search_result_key>
+                <advanced_search_no_result_key>advanced-search-no-results</advanced_search_no_result_key>
             </settings>
         </integernet_piwik>
     </default>

@@ -4,91 +4,38 @@
  *
  * @category IntegerNet
  * @package IntegerNet_Piwik
- * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @copyright  Copyright (c) 2013-2014 integer_net GmbH (http://www.integer-net.de/)
  * @license http://opensource.org/licenses/osl-3.0.php Open Software Licence 3.0 (OSL-3.0)
+ * @author integer_net GmbH <info@integer-net.de>
  * @author Viktor Franz <vf@integer-net.de>
  */
 
+
 /**
- * Enter description here ...
+ * Class IntegerNet_Piwik_Helper_Data
  */
 class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    /**
-     *
-     */
-    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_IS_ACTIVE = 'integernet_piwik/settings/is_active';
-    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_SIDE_ID = 'integernet_piwik/settings/side_id';
-    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST = 'integernet_piwik/settings/host';
-    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST_SECURE = 'integernet_piwik/settings/host_secure';
-    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_HEAD_JS = 'integernet_piwik/settings/head_js';
-    const XML_PATH_INTEGERNET_PIWIK_SETTINGS_TRACK_ONEPAGE_ACTION = 'integernet_piwik/settings/track_onepage_action';
+
 
     /**
      *
      */
     const SESSION_KEY_MULTISHIPPING_ORDER_IDS = '_integernet_piwik_multishipping_order_ids';
 
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_IS_ACTIVE);
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getSideId()
-    {
-        $sideId = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_SIDE_ID);
-        $sideId = trim($sideId);
-
-        return preg_match('/^\d*$/', $sideId) ? $sideId : null;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getHost()
-    {
-        if (Mage::app()->getRequest()->isSecure()) {
-            $host = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST_SECURE);
-        } else {
-            $host = Mage::getStoreConfig(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_HOST);
-        }
-
-        $host = trim($host);
-
-        return $host ? $host : null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isHeadJs()
-    {
-        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_HEAD_JS);
-    }
-
-    /**
-     * @return bool
-     */
-    public function getTrackOnepageSteps()
-    {
-        return Mage::getStoreConfigFlag(self::XML_PATH_INTEGERNET_PIWIK_SETTINGS_TRACK_ONEPAGE_ACTION);
-    }
 
     /**
      * @param $orderIds
+     *
      * @return $this
      */
     public function setMultishippingOrderIds($orderIds)
     {
         Mage::getSingleton('core/session')->setData(self::SESSION_KEY_MULTISHIPPING_ORDER_IDS, $orderIds);
+
         return $this;
     }
+
 
     /**
      * @return null|array
@@ -102,30 +49,36 @@ class IntegerNet_Piwik_Helper_Data extends Mage_Core_Helper_Abstract
         return $orderIds;
     }
 
+
     /**
      * @return $this
      */
     public function setHasQuoteUpdate()
     {
         Mage::getSingleton('core/session')->setIntegernetPiwikQuote(true);
+
         return $this;
     }
 
+
     /**
      * @param $unset
+     *
      * @return null|bool
      */
     public function getHasQuoteUpdate($unset = false)
     {
-        if($unset === true) {
+        if ($unset === true) {
             return Mage::getSingleton('core/session')->getIntegernetPiwikQuote(true);
         }
 
         return Mage::getSingleton('core/session')->getIntegernetPiwikQuote();
     }
 
+
     /**
      * @param $productId
+     *
      * @return string
      */
     public function getProductCategoryList($productId)

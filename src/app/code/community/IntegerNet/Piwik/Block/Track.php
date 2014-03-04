@@ -4,16 +4,19 @@
  *
  * @category IntegerNet
  * @package IntegerNet_Piwik
- * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @copyright  Copyright (c) 2013-2014 integer_net GmbH (http://www.integer-net.de/)
  * @license http://opensource.org/licenses/osl-3.0.php Open Software Licence 3.0 (OSL-3.0)
+ * @author integer_net GmbH <info@integer-net.de>
  * @author Viktor Franz <vf@integer-net.de>
  */
 
+
 /**
- * Enter description here ...
+ * Class IntegerNet_Piwik_Block_Track
  */
 class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
 {
+
 
     /**
      * Get relevant path to template
@@ -29,29 +32,33 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
         return $this->_template;
     }
 
+
     /**
      * @return string
      */
     public function getPiwikJsSrc()
     {
-        return Mage::helper('integernet_piwik')->getHost() . 'piwik.js';
+        return Mage::helper('integernet_piwik/config')->getHost() . 'piwik.js';
     }
+
 
     /**
      * @return string
      */
     public function getPiwikPhpSrc()
     {
-        return Mage::helper('integernet_piwik')->getHost() . 'piwik.php';
+        return Mage::helper('integernet_piwik/config')->getHost() . 'piwik.php';
     }
+
 
     /**
      * @return int
      */
     public function getSideId()
     {
-        return Mage::helper('integernet_piwik')->getSideId();
+        return Mage::helper('integernet_piwik/config')->getSideId();
     }
+
 
     /**
      * @return null|string
@@ -62,16 +69,17 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
 
         if (in_array('catalog_category_view', $handles) && $category = Mage::helper('catalog')->getCategory()) {
             $arguments = array();
-            $arguments[] = 'false';
-            $arguments[] = 'false';
-            $arguments[] = sprintf('"%s"', addslashes(trim($category->getName())));
-            $arguments[] = 'false';
+            $arguments['product_sku'] = 'false';
+            $arguments['product_name'] = 'false';
+            $arguments['category_name'] = sprintf('"%s"', addslashes(trim($category->getName())));
+            $arguments['product_price'] = 'false';
 
             return implode(', ', $arguments);
         }
 
         return null;
     }
+
 
     /**
      * @return null|string
@@ -85,16 +93,17 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
             $category = Mage::helper('catalog')->getCategory();
 
             $arguments = array();
-            $arguments[] = sprintf('"%s"', addslashes(trim($product->getSku())));
-            $arguments[] = sprintf('"%s"', addslashes(trim($product->getName())));
-            $arguments[] = $category ? sprintf('"%s"', addslashes(trim($category->getName()))) : 'false';
-            $arguments[] = $product->getFinalPrice();
+            $arguments['product_sku'] = sprintf('"%s"', addslashes(trim($product->getSku())));
+            $arguments['product_name'] = sprintf('"%s"', addslashes(trim($product->getName())));
+            $arguments['category_name'] = $category ? sprintf('"%s"', addslashes(trim($category->getName()))) : 'false';
+            $arguments['product_price'] = $product->getFinalPrice();
 
             return implode(', ', $arguments);
         }
 
         return null;
     }
+
 
     /**
      * @return null|string
@@ -106,20 +115,24 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
 
         if (in_array('catalogsearch_result_index', $handles)) {
 
-            $arguments[] = sprintf('"%s"', addslashes(strtolower(trim(Mage::helper('catalogsearch')->getQuery()->getQueryText()))));
-            $arguments[] = 'null';
-            $arguments[] = Mage::helper('catalogsearch')->getQuery()->getNumResults();
+            $arguments['keyword'] = sprintf('"%s"', addslashes(strtolower(trim(Mage::helper('catalogsearch')->getQuery()->getQueryText()))));
+            $arguments['category'] = 'null';
+            $arguments['search_count'] = Mage::helper('catalogsearch')->getQuery()->getNumResults();
 
         } elseif (in_array('catalogsearch_advanced_result', $handles)) {
 
+            $resultKey = Mage::helper('integernet_piwik/config')->getAdvancedSearchResultKey();
+            $noResultKey = Mage::helper('integernet_piwik/config')->getAdvancedSearchNoResultKey();
+
             $count = Mage::getSingleton('catalogsearch/advanced')->getProductCollection()->count();
-            $arguments[] = $count ? '"advanced-search"' : '"advanced-search-no-results"';
-            $arguments[] = 'null';
-            $arguments[] = $count;
+            $arguments['keyword'] = $count ? sprintf('"%s"', $resultKey) : sprintf('"%s"', $noResultKey);
+            $arguments['category'] = 'null';
+            $arguments['search_count'] = $count;
         }
 
         return count($arguments) ? implode(', ', $arguments) : null;
     }
+
 
     /**
      * @return bool
@@ -128,12 +141,13 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
     {
         $handles = $this->getLayout()->getUpdate()->getHandles();
 
-        if (in_array('checkout_onepage_index', $handles) && Mage::helper('integernet_piwik')->getTrackOnepageSteps()) {
+        if (in_array('checkout_onepage_index', $handles) && Mage::helper('integernet_piwik/config')->getTrackOnepageSteps()) {
             return true;
         }
 
         return false;
     }
+
 
     /**
      * @return null|array
@@ -147,14 +161,14 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
             foreach ($quote->getAllVisibleItems() as $item) {
 
                 if (array_key_exists($item->getSku(), $groupArguments)) {
-                    $groupArguments[$item->getSku()][3] += $item->getBaseRowTotalInclTax();
-                    $groupArguments[$item->getSku()][4] += $item->getQty();
+                    $groupArguments[$item->getSku()]['price'] += $item->getBaseRowTotalInclTax();
+                    $groupArguments[$item->getSku()]['quantity'] += $item->getQty();
                 } else {
-                    $groupArguments[$item->getSku()][0] = sprintf('"%s"', addslashes($item->getSku()));
-                    $groupArguments[$item->getSku()][1] = sprintf('"%s"', addslashes($item->getName()));
-                    $groupArguments[$item->getSku()][2] = Mage::helper('integernet_piwik')->getProductCategoryList($item->getProductId());
-                    $groupArguments[$item->getSku()][3] = $item->getBaseRowTotalInclTax();
-                    $groupArguments[$item->getSku()][4] = $item->getQty();
+                    $groupArguments[$item->getSku()]['product_sku'] = sprintf('"%s"', addslashes($item->getSku()));
+                    $groupArguments[$item->getSku()]['product_name'] = sprintf('"%s"', addslashes($item->getName()));
+                    $groupArguments[$item->getSku()]['product_category'] = Mage::helper('integernet_piwik')->getProductCategoryList($item->getProductId());
+                    $groupArguments[$item->getSku()]['price'] = $item->getBaseRowTotalInclTax();
+                    $groupArguments[$item->getSku()]['quantity'] = $item->getQty();
                 }
             }
 
@@ -171,6 +185,7 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
         return null;
     }
 
+
     /**
      * @return float|null
      */
@@ -182,6 +197,7 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
 
         return null;
     }
+
 
     /**
      * @return null|Mage_Sales_Model_Resource_Order_Collection
@@ -215,6 +231,7 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
         return $this->getData(__METHOD__);
     }
 
+
     /**
      * @return string
      */
@@ -230,18 +247,19 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
             $baseDiscountAmount = $orders->getColumnValues('base_discount_amount');
 
             $arguments = array();
-            $arguments[] = sprintf('"%s"', implode(';', $incrementId));
-            $arguments[] = array_sum($baseGrandTotal);
-            $arguments[] = array_sum($baseSubtotalInclTax);
-            $arguments[] = array_sum($baseTaxAmount);
-            $arguments[] = array_sum($baseShippingInclTax);
-            $arguments[] = array_sum($baseDiscountAmount);
+            $arguments['order_id'] = sprintf('"%s"', implode(';', $incrementId));
+            $arguments['grand_total'] = array_sum($baseGrandTotal);
+            $arguments['sub_total'] = array_sum($baseSubtotalInclTax);
+            $arguments['tax'] = array_sum($baseTaxAmount);
+            $arguments['shipping'] = array_sum($baseShippingInclTax);
+            $arguments['discount'] = array_sum($baseDiscountAmount);
 
             return implode(', ', $arguments);
         }
 
         return null;
     }
+
 
     /**
      * @return array
@@ -259,14 +277,14 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
                 foreach ($order->getAllVisibleItems() as $item) {
 
                     if (array_key_exists($item->getSku(), $groupArguments)) {
-                        $groupArguments[$item->getSku()][3] += $item->getBaseRowTotalInclTax();
-                        $groupArguments[$item->getSku()][4] += $item->getQtyOrdered();
+                        $groupArguments[$item->getSku()]['price'] += $item->getBaseRowTotalInclTax();
+                        $groupArguments[$item->getSku()]['quantity'] += $item->getQtyOrdered();
                     } else {
-                        $groupArguments[$item->getSku()][0] = sprintf('"%s"', addslashes($item->getSku()));
-                        $groupArguments[$item->getSku()][1] = sprintf('"%s"', addslashes($item->getName()));
-                        $groupArguments[$item->getSku()][2] = Mage::helper('integernet_piwik')->getProductCategoryList($item->getProductId());
-                        $groupArguments[$item->getSku()][3] = $item->getBaseRowTotalInclTax();
-                        $groupArguments[$item->getSku()][4] = $item->getQtyOrdered();
+                        $groupArguments[$item->getSku()]['product_sku'] = sprintf('"%s"', addslashes($item->getSku()));
+                        $groupArguments[$item->getSku()]['product_name'] = sprintf('"%s"', addslashes($item->getName()));
+                        $groupArguments[$item->getSku()]['product_category'] = Mage::helper('integernet_piwik')->getProductCategoryList($item->getProductId());
+                        $groupArguments[$item->getSku()]['price'] = $item->getBaseRowTotalInclTax();
+                        $groupArguments[$item->getSku()]['quantity'] = $item->getQtyOrdered();
                     }
                 }
             }
@@ -274,7 +292,7 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
             $argumentsList = array();
 
             foreach ($groupArguments as $arguments) {
-                $arguments[3] = $arguments[3] / $arguments[4];
+                $arguments['price'] = $arguments['price'] / $arguments['quantity'];
                 $argumentsList[] = implode(', ', $arguments);
             }
 
@@ -284,29 +302,33 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
         return null;
     }
 
+
     /**
      * @return null|string
      */
     public function _toHtml()
     {
-        $helper = Mage::helper('integernet_piwik');
+        $configHelper = Mage::helper('integernet_piwik/config');
 
-        if ($helper->isActive() && $helper->getSideId() && $helper->getHost()) {
+        if ($configHelper->isActive() && $configHelper->getSideId() && $configHelper->getHost()) {
             return trim(parent::_toHtml());
         }
 
         return null;
     }
 
+
     /**
      * Processing block html after rendering
      *
      * @param   string $html
+     *
      * @return  string
      */
     protected function _afterToHtml($html)
     {
         Mage::helper('integernet_piwik')->getHasQuoteUpdate(true);
+
         return parent::_afterToHtml($html);
     }
 }

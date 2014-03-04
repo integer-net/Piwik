@@ -5,13 +5,10 @@
  *
  * @category IntegerNet
  * @package IntegerNet_Piwik
- * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @copyright  Copyright (c) 2013-2014 integer_net GmbH (http://www.integer-net.de/)
  * @license http://opensource.org/licenses/osl-3.0.php Open Software Licence 3.0 (OSL-3.0)
+ * @author integer_net GmbH <info@integer-net.de>
  * @author Viktor Franz <vf@integer-net.de>
- */
-
-/**
- * Enter description here ...
  */
 -->
 <config>
@@ -25,7 +22,7 @@
             <show_in_website>1</show_in_website>
             <show_in_store>10</show_in_store>
             <groups>
-                <settings translate="label">
+                <settings>
                     <label>Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>10</sort_order>
@@ -33,7 +30,7 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <is_active translate="label comment">
+                        <is_active>
                             <label>Is Active</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -42,28 +39,28 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </is_active>
-                        <side_id translate="label comment">
+                        <side_id>
                             <label>Side ID</label>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </side_id>
-                        <host translate="label comment">
+                        <host>
                             <label>Piwik Host</label>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </host>
-                        <host_secure translate="label comment">
+                        <host_secure>
                             <label>Piwik Secure Host</label>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </host_secure>
-                        <head_js translate="label comment">
+                        <head_js>
                             <label>Head Include Piwik JavaScript</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -73,7 +70,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </head_js>
-                        <track_onepage_action translate="label comment">
+                        <track_onepage_action>
                             <label>Track Onepage Checkout</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>

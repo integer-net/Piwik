@@ -4,20 +4,25 @@
  *
  * @category IntegerNet
  * @package IntegerNet_Piwik
- * @copyright  Copyright (c) 2012-2013 integer_net GmbH (http://www.integer-net.de/)
+ * @copyright  Copyright (c) 2013-2014 integer_net GmbH (http://www.integer-net.de/)
  * @license http://opensource.org/licenses/osl-3.0.php Open Software Licence 3.0 (OSL-3.0)
+ * @author integer_net GmbH <info@integer-net.de>
  * @author Viktor Franz <vf@integer-net.de>
  */
 
+
 /**
- * Enter description here ...
+ * Class IntegerNet_Piwik_Model_System_Config_Backend_HeadJs
  */
 class IntegerNet_Piwik_Model_System_Config_Backend_HeadJs extends Mage_Core_Model_Config_Data
 {
+
+
     /**
      *
      */
     const PIWIK_JS = 'piwik.js';
+
 
     /**
      */
