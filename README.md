@@ -18,7 +18,6 @@ Requirements
 - PHP >= 5.2.0
 - PHP <= 5.5.x
 
-
 Compatibility
 -------------
 
@@ -32,8 +31,10 @@ Compatibility
 - Magento 1.7.0.1
 - Magento 1.7.0.2
 - Magento 1.8.0.0
-- Magento 1.8.1.0
+- Magento 1.8.1.0  
 
+Piwik Compatibility
+-------------------
 
 - Piwik 1.x
 - Piwik 2.0.x
@@ -42,7 +43,7 @@ Installation Instructions
 -------------------------
 1. Install the extension by copying all the files in `src` directory into your Magento document root.
 2. Clear the cache and start a new admin session (logout from the admin panel and then login again).
-3. Configure the extension under `System >> Configuration >> Piwik (integer_net)`
+3. Configure the extension under ***System >> Configuration >> Piwik (integer_net)***
 
 Uninstallation
 --------------
@@ -67,7 +68,7 @@ Developer
 ---------
 Viktor Franz
 
-WWW [http://www.integer-net.de/](http://www.integer-net.de/)
+WWW [http://www.integer-net.de/](http://www.integer-net.de/)  
 Twitter [@integer_net](https://twitter.com/integer_net)
 
 Licence
