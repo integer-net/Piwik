@@ -19,12 +19,6 @@ class IntegerNet_Piwik_Helper_Config extends Mage_Core_Helper_Abstract
 
 
     /**
-     *
-     */
-    const SESSION_KEY_MULTISHIPPING_ORDER_IDS = '_integernet_piwik_multishipping_order_ids';
-
-
-    /**
      * @return bool
      */
     public function isActive()
