@@ -175,7 +175,7 @@ class IntegerNet_Piwik_Block_Track extends Mage_Core_Block_Template
             $argumentsList = array();
 
             foreach ($groupArguments as $arguments) {
-                $arguments[3] = $arguments[3] / $arguments[4];
+                $arguments['price'] = $arguments['price'] / $arguments['quantity'];
                 $argumentsList[] = implode(', ', $arguments);
             }
 
